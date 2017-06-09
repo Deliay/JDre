@@ -26,7 +26,7 @@ namespace JDRE.JVM
             ReadResult result = cp.ReadClass(cmd.classname);
 
             if(result.err.Length != 0) Console.WriteLine(result.err);
-            else Console.WriteLine(result.bytes.Length);
+            else Console.WriteLine(result.stream.Length);
 
         }
     }

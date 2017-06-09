@@ -11,8 +11,8 @@ namespace JDRE.JVM.classpath
     struct ReadResult
     {
         public Entry ent;
-        public byte[] bytes;
         public string err;
+        public Stream stream;
     }
 
     abstract class Entry
@@ -50,7 +50,9 @@ namespace JDRE.JVM.classpath
             string realPath = Path.Combine(absPath, className);//.Replace('/', '\\'));
             try
             {
-                return new ReadResult() { bytes = File.ReadAllBytes(realPath), ent = this, err = string.Empty };
+                Stream stream = File.OpenRead(realPath);
+                return new ReadResult()
+                { /*bytes = File.ReadAllBytes(realPath),*/ ent = this, err = string.Empty, stream = stream };
             }
             catch
             {
@@ -88,12 +90,10 @@ namespace JDRE.JVM.classpath
                     using (ZipArchive zip = new ZipArchive(zipStream, ZipArchiveMode.Read))
                     {
                         var entry = zip.GetEntry(className);
-                        using (Stream stream = entry.Open())
-                        {
-                            byte[] buf = new byte[entry.Length];
-                            stream.Read(buf, 0, (int)entry.Length);
-                            return new ReadResult() { bytes = buf, ent = this, err = string.Empty };
-                        }
+                        Stream stream = entry.Open();
+                        byte[] buf = new byte[entry.Length];
+                        stream.Read(buf, 0, (int)entry.Length);
+                        return new ReadResult() { /*bytes = buf,*/ ent = this, err = string.Empty, stream = stream };
                     }
                 }
             }
