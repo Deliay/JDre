@@ -93,9 +93,6 @@ namespace JDRE.JVM.classpath
                         Stream stream = entry.Open();
                         byte[] buf = new byte[entry.Length];
                         stream.Read(buf, 0, (int)entry.Length);
-
-                        File.WriteAllBytes(@"D:\1.class", buf);
-
                         return new ReadResult() { /*bytes = buf,*/ ent = this, err = string.Empty, stream = new MemoryStream(buf) };
                     }
                 }
