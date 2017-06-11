@@ -24,24 +24,60 @@ namespace JDRE.JVM.classfile
 
     static class ConstantBinaryReaderHelper
     {
+        public static byte[] Reverse(this byte[] b)
+        {
+            Array.Reverse(b);
+            return b;
+        }
+
+        public static UInt16 ReadUInt16BE(this BinaryReader binRdr)
+        {
+            return BitConverter.ToUInt16(binRdr.ReadBytesRequired(sizeof(UInt16)).Reverse(), 0);
+        }
+
+        public static Int16 ReadInt16BE(this BinaryReader binRdr)
+        {
+            return BitConverter.ToInt16(binRdr.ReadBytesRequired(sizeof(Int16)).Reverse(), 0);
+        }
+
+        public static UInt32 ReadUInt32BE(this BinaryReader binRdr)
+        {
+            return BitConverter.ToUInt32(binRdr.ReadBytesRequired(sizeof(UInt32)).Reverse(), 0);
+        }
+
+        public static Int32 ReadInt32BE(this BinaryReader binRdr)
+        {
+            return BitConverter.ToInt32(binRdr.ReadBytesRequired(sizeof(Int32)).Reverse(), 0);
+        }
+
+        public static byte[] ReadBytesRequired(this BinaryReader binRdr, int byteCount)
+        {
+            var result = binRdr.ReadBytes(byteCount);
+
+            if (result.Length != byteCount)
+                throw new EndOfStreamException(string.Format("{0} bytes required from stream, but only {1} returned.", byteCount, result.Length));
+
+            return result;
+        }
+
         private static string DecodeMUTF8(byte[] bytes)
         {
-            return "";
+            return System.Text.Encoding.UTF8.GetString(bytes);
         }
         public static string ReadMUTF8String(this BinaryReader reader)
         {
-            int len = reader.ReadUInt16();
+            int len = reader.ReadUInt16BE();
             byte[] bytes = reader.ReadBytes(len);
             return DecodeMUTF8(bytes);
         }
 
         public static UInt16[] ReadUInt16Array(this BinaryReader reader)
         {
-            int count = reader.ReadUInt16();
+            int count = reader.ReadUInt16BE();
             UInt16[] result = new UInt16[count];
             for (int i = 0; i < count; i++)
             {
-                result[i] = reader.ReadUInt16();
+                result[i] = reader.ReadUInt16BE();
             }
             return result;
         }
@@ -103,7 +139,7 @@ namespace JDRE.JVM.classfile
         public readonly Int32 value;
         public ConstantIntegerInfo(BinaryReader reader) : base(reader)
         {
-            value = reader.ReadInt32();
+            value = reader.ReadInt32BE();
         }
     }
 
@@ -142,8 +178,8 @@ namespace JDRE.JVM.classfile
 
         public ConstantUTF8Info(BinaryReader reader) : base(reader)
         {
-            //value = reader.ReadMUTF8String();
-            value = reader.ReadString();
+            value = reader.ReadMUTF8String();
+            //value = reader.ReadString();
         }
     }
 
@@ -154,7 +190,7 @@ namespace JDRE.JVM.classfile
         string value;
         public ConstantStringInfo(BinaryReader reader, ConstantPool cp) : base(reader)
         {
-            stringIndex = reader.ReadUInt16();
+            stringIndex = reader.ReadUInt16BE();
             this.cp = cp;
         }
 
@@ -171,7 +207,7 @@ namespace JDRE.JVM.classfile
         public ConstantClassInfo(BinaryReader reader, ConstantPool cp) : base(reader)
         {
             this.cp = cp;
-            nameIndex = reader.ReadUInt16();
+            nameIndex = reader.ReadUInt16BE();
         }
 
         public override string ToString()
@@ -187,8 +223,8 @@ namespace JDRE.JVM.classfile
 
         public ConstantNameAndTypeInfo(BinaryReader reader) : base(reader)
         {
-            nameIndex = reader.ReadUInt16();
-            descriptorIndex = reader.ReadUInt16();
+            nameIndex = reader.ReadUInt16BE();
+            descriptorIndex = reader.ReadUInt16BE();
         }
     }
 
@@ -200,8 +236,8 @@ namespace JDRE.JVM.classfile
         public ConstantMemberrefInfo(BinaryReader reader, ConstantPool cp) : base(reader)
         {
             this.cp = cp;
-            classIndex = reader.ReadUInt16();
-            nameAndTypeIndex = reader.ReadUInt16();
+            classIndex = reader.ReadUInt16BE();
+            nameAndTypeIndex = reader.ReadUInt16BE();
         }
 
         public string ClassName()
@@ -245,7 +281,7 @@ namespace JDRE.JVM.classfile
         public ConstantPool(BinaryReader reader)
         {
             this.reader = reader;
-            count = reader.ReadUInt16();
+            count = reader.ReadUInt16BE();
             cp = new ConstantInfo[count];
 
             for (int i = 1; i < count; i++)
@@ -278,7 +314,8 @@ namespace JDRE.JVM.classfile
 
         public string getUtf8(UInt16 index)
         {
-            throw new NotImplementedException();
+            ConstantUTF8Info info = getConstantInfo(index) as ConstantUTF8Info;
+            return info.value;
         }
     }
 }

@@ -47,7 +47,6 @@
     <Compile Include="CommandParser.cs" />
     <Compile Include="JVM\classfile\AttributeInfo.cs" />
     <Compile Include="JVM\classfile\ClassFile.cs" />
-    <Compile Include="JVM\classfile\ClassReader.cs" />
     <Compile Include="JVM\classfile\ConstantPool.cs" />
     <Compile Include="JVM\classfile\MemberInfo.cs" />
     <Compile Include="JVM\classpath\Classpath.cs" />

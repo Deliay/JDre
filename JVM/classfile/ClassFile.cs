@@ -51,12 +51,13 @@ namespace JDRE.JVM.classfile
         public void Read()
         {
             //magic
-            magic = reader.ReadUInt32();
+            reader.BaseStream.Seek(0, SeekOrigin.Begin);
+            magic = reader.ReadUInt32BE();
             if (magic != 0xCAFEBABE) throw new FileLoadException("magic error");
 
             //version
-            minorVersion = reader.ReadUInt16();
-            majorVersion = reader.ReadUInt16();
+            minorVersion = reader.ReadUInt16BE();
+            majorVersion = reader.ReadUInt16BE();
 
             switch (majorVersion)
             {
@@ -77,11 +78,11 @@ namespace JDRE.JVM.classfile
             //constant pool
             constantPool = new ConstantPool(reader);
             //access flag
-            accessFlag = reader.ReadUInt16();
+            accessFlag = reader.ReadUInt16BE();
             //this class
-            thisClass = reader.ReadUInt16();
+            thisClass = reader.ReadUInt16BE();
             //super class
-            superClass = reader.ReadUInt16();
+            superClass = reader.ReadUInt16BE();
             //interfaces
             interfaces = reader.ReadUInt16Array();
             //fields

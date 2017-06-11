@@ -15,15 +15,15 @@ namespace JDRE.JVM.classfile
         private MemberInfo(BinaryReader reader, ConstantPool cp)
         {
             this.cp = cp;
-            accessflag = reader.ReadUInt16();
-            nameIndex = reader.ReadUInt16();
-            descriptorIndex = reader.ReadUInt16();
+            accessflag = reader.ReadUInt16BE();
+            nameIndex = reader.ReadUInt16BE();
+            descriptorIndex = reader.ReadUInt16BE();
             attributes = AttributeInfo.ReadAttributes(reader, cp);
         }
 
         public static MemberInfo[] ReadMembers(BinaryReader reader, ConstantPool cp)
         {
-            int count = reader.ReadUInt16();
+            int count = reader.ReadUInt16BE();
             MemberInfo[] res = new MemberInfo[count];
             for (int i = 0; i < count; i++)
             {

@@ -1,4 +1,5 @@
-﻿using JDRE.JVM.classpath;
+﻿using JDRE.JVM.classfile;
+using JDRE.JVM.classpath;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +29,15 @@ namespace JDRE.JVM
             if(result.err.Length != 0) Console.WriteLine(result.err);
             else Console.WriteLine(result.stream.Length);
 
+            ClassFile cf = new ClassFile(result.stream);
+            cf.Read();
+
+            Console.WriteLine(cf.ClassName);
+            Console.WriteLine("Methods count: " + cf.Methods.Count);
+            foreach (var item in cf.Methods)
+            {
+                Console.WriteLine(item.Name());
+            }
         }
     }
 }
