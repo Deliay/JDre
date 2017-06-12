@@ -51,6 +51,12 @@
     <Compile Include="JVM\classfile\MemberInfo.cs" />
     <Compile Include="JVM\classpath\Classpath.cs" />
     <Compile Include="JVM\classpath\Entry.cs" />
+    <Compile Include="JVM\runtime\Frame.cs" />
+    <Compile Include="JVM\runtime\LocalVars.cs" />
+    <Compile Include="JVM\runtime\Object.cs" />
+    <Compile Include="JVM\runtime\OperandStack.cs" />
+    <Compile Include="JVM\runtime\Stack.cs" />
+    <Compile Include="JVM\runtime\Thread.cs" />
     <Compile Include="JVM\VM.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
