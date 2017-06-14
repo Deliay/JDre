@@ -31,13 +31,48 @@ namespace JDRE.JVM
 
             ClassFile cf = new ClassFile(result.stream);
             cf.Read();
-
+#if (DEBUG)
             Console.WriteLine(cf.ClassName);
+            Console.WriteLine("============================");
             Console.WriteLine("Methods count: " + cf.Methods.Count);
+            Console.WriteLine("============================");
+            Console.WriteLine("Super class:" + cf.SuperClassName);
+            Console.WriteLine("============================");
+            Console.WriteLine("Interfaces Implements:");
+            foreach (var item in cf.InterfaceNames())
+            {
+                Console.Write(item);
+                Console.Write(",");
+            }
+            Console.WriteLine("\n============================");
+            Console.WriteLine("Methods:");
             foreach (var item in cf.Methods)
             {
                 Console.WriteLine(item.Name());
             }
+#endif
+            MemberInfo main = getMainMethod(cf);
+            try
+            {
+                new interpreter.Interpreter(main);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public MemberInfo getMainMethod(ClassFile classFile)
+        {
+            foreach (var item in classFile.Methods)
+            {
+                if(item.Name() == "main" && item.Descriptor() == "([Ljava/lang/String;)V")
+                {
+                    return item;
+                }
+            }
+            return null;
         }
     }
+
 }
