@@ -15,6 +15,12 @@ namespace JDRE.JVM.runtime
 
         Stack stack;
         public int PC { get; set; }
+
+        public Frame NewFrame(int maxLocals, int maxStacks)
+        {
+            return new Frame(this, maxLocals, maxStacks);
+        }
+
         public void PushFrame(Frame frame)
         {
             stack.Push(frame);

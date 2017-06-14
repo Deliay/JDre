@@ -32,6 +32,15 @@ namespace JDRE.JVM.classfile
             return res;
         }
 
+        public CodeAttribute CodeAttr()
+        {
+            foreach (var item in attributes)
+            {
+                if (item is CodeAttribute) return (CodeAttribute)item;
+            }
+            return null;
+        }
+
         public string Name()
         {
             return cp.getUtf8(nameIndex);

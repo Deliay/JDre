@@ -187,7 +187,7 @@ namespace JDRE.JVM.classfile
     {
         ConstantPool cp;
         UInt16 stringIndex;
-        string value;
+        //string value;
         public ConstantStringInfo(BinaryReader reader, ConstantPool cp) : base(reader)
         {
             stringIndex = reader.ReadUInt16BE();

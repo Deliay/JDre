@@ -26,6 +26,10 @@ namespace JDRE.JVM.classfile
         public ClassFile(Stream stream)
         {
             this.stream = stream;
+            if(stream == null)
+            {
+                throw new ArgumentNullException();
+            }
             reader = new BinaryReader(stream);
             stream.Seek(0, SeekOrigin.Begin);
         }

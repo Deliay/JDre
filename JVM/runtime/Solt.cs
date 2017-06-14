@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace JDRE.JVM.runtime
 {
-    class Object
+    class Solt
     {
-
+        public object Number;
+        public Object Refer;
     }
+
 }

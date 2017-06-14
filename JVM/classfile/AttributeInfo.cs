@@ -131,12 +131,12 @@ namespace JDRE.JVM.classfile
 
     class CodeAttribute : AttributeInfo
     {
-        ConstantPool cp;
-        UInt16 maxStack, maxLocals;
-        uint codelen;
-        byte[] code;
-        ExceptionTableEntry[] exceptionTable;
-        AttributeInfo[] attributes;
+        public readonly ConstantPool cp;
+        public readonly UInt16 maxStack, maxLocals;
+        public readonly uint codelen;
+        public readonly byte[] code;
+        public readonly ExceptionTableEntry[] exceptionTable;
+        public readonly AttributeInfo[] attributes;
 
         public CodeAttribute(BinaryReader reader, ConstantPool cp) : base(reader)
         {
