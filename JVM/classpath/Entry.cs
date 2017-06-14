@@ -47,7 +47,7 @@ namespace JDRE.JVM.classpath
         }
         public override ReadResult readClass(string className)
         {
-            string realPath = Path.Combine(absPath, className);//.Replace('/', '\\'));
+            string realPath = Path.Combine(absPath, className).Replace('/', '\\');
             try
             {
                 Stream stream = File.OpenRead(realPath);
