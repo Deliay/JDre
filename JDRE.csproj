@@ -65,6 +65,14 @@
     <Compile Include="JVM\instructions\Ops\Stores.cs" />
     <Compile Include="JVM\interpreter\Interpreter.cs" />
     <Compile Include="JVM\runtime\Frame.cs" />
+    <Compile Include="JVM\runtime\Heap\AccessFlag.cs" />
+    <Compile Include="JVM\runtime\Heap\Class.cs" />
+    <Compile Include="JVM\runtime\Heap\ClassLoader.cs" />
+    <Compile Include="JVM\runtime\Heap\ClassMember.cs" />
+    <Compile Include="JVM\runtime\Heap\ConstantPool.cs" />
+    <Compile Include="JVM\runtime\Heap\Field.cs" />
+    <Compile Include="JVM\runtime\Heap\Method.cs" />
+    <Compile Include="JVM\runtime\Heap\Solts.cs" />
     <Compile Include="JVM\runtime\LocalVars.cs" />
     <Compile Include="JVM\runtime\Object.cs" />
     <Compile Include="JVM\runtime\OperandStack.cs" />
