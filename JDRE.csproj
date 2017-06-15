@@ -72,7 +72,8 @@
     <Compile Include="JVM\runtime\Heap\ConstantPool.cs" />
     <Compile Include="JVM\runtime\Heap\Field.cs" />
     <Compile Include="JVM\runtime\Heap\Method.cs" />
-    <Compile Include="JVM\runtime\Heap\Solts.cs" />
+    <Compile Include="JVM\runtime\Heap\References.cs" />
+    <Compile Include="JVM\runtime\Heap\Slots.cs" />
     <Compile Include="JVM\runtime\LocalVars.cs" />
     <Compile Include="JVM\runtime\Object.cs" />
     <Compile Include="JVM\runtime\OperandStack.cs" />

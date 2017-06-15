@@ -27,33 +27,33 @@ namespace JDRE.JVM.instructions.Stack
     {
         public override void Execute(Frame frame)
         {
-            Solt solt = frame.OperandStack.Pop();
-            frame.OperandStack.Push(solt);
-            frame.OperandStack.Push(solt);
+            Slot slot = frame.OperandStack.Pop();
+            frame.OperandStack.Push(slot);
+            frame.OperandStack.Push(slot);
         }
     }
     class DUP_X1 : NoOperandsInstruction
     {
         public override void Execute(Frame frame)
         {
-            Solt solt1 = frame.OperandStack.Pop();
-            Solt solt2 = frame.OperandStack.Pop();
-            frame.OperandStack.Push(solt1);
-            frame.OperandStack.Push(solt2);
-            frame.OperandStack.Push(solt1);
+            Slot slot1 = frame.OperandStack.Pop();
+            Slot slot2 = frame.OperandStack.Pop();
+            frame.OperandStack.Push(slot1);
+            frame.OperandStack.Push(slot2);
+            frame.OperandStack.Push(slot1);
         }
     }
     class DUP_X2 : NoOperandsInstruction
     {
         public override void Execute(Frame frame)
         {
-            Solt solt1 = frame.OperandStack.Pop();
-            Solt solt2 = frame.OperandStack.Pop();
-            Solt solt3 = frame.OperandStack.Pop();
-            frame.OperandStack.Push(solt1);
-            frame.OperandStack.Push(solt3);
-            frame.OperandStack.Push(solt2);
-            frame.OperandStack.Push(solt1);
+            Slot slot1 = frame.OperandStack.Pop();
+            Slot slot2 = frame.OperandStack.Pop();
+            Slot slot3 = frame.OperandStack.Pop();
+            frame.OperandStack.Push(slot1);
+            frame.OperandStack.Push(slot3);
+            frame.OperandStack.Push(slot2);
+            frame.OperandStack.Push(slot1);
         }
     }
 
@@ -61,42 +61,42 @@ namespace JDRE.JVM.instructions.Stack
     {
         public override void Execute(Frame frame)
         {
-            Solt solt1 = frame.OperandStack.Pop();
-            Solt solt2 = frame.OperandStack.Pop();
-            frame.OperandStack.Push(solt2);
-            frame.OperandStack.Push(solt1);
-            frame.OperandStack.Push(solt2);
-            frame.OperandStack.Push(solt1);
+            Slot slot1 = frame.OperandStack.Pop();
+            Slot slot2 = frame.OperandStack.Pop();
+            frame.OperandStack.Push(slot2);
+            frame.OperandStack.Push(slot1);
+            frame.OperandStack.Push(slot2);
+            frame.OperandStack.Push(slot1);
         }
     }
     class DUP2_X1 : NoOperandsInstruction
     {
         public override void Execute(Frame frame)
         {
-            Solt solt1 = frame.OperandStack.Pop();
-            Solt solt2 = frame.OperandStack.Pop();
-            Solt solt3 = frame.OperandStack.Pop();
-            frame.OperandStack.Push(solt2);
-            frame.OperandStack.Push(solt1);
-            frame.OperandStack.Push(solt3);
-            frame.OperandStack.Push(solt2);
-            frame.OperandStack.Push(solt1);
+            Slot slot1 = frame.OperandStack.Pop();
+            Slot slot2 = frame.OperandStack.Pop();
+            Slot slot3 = frame.OperandStack.Pop();
+            frame.OperandStack.Push(slot2);
+            frame.OperandStack.Push(slot1);
+            frame.OperandStack.Push(slot3);
+            frame.OperandStack.Push(slot2);
+            frame.OperandStack.Push(slot1);
         }
     }
     class DUP2_X2 : NoOperandsInstruction
     {
         public override void Execute(Frame frame)
         {
-            Solt solt1 = frame.OperandStack.Pop();
-            Solt solt2 = frame.OperandStack.Pop();
-            Solt solt3 = frame.OperandStack.Pop();
-            Solt solt4 = frame.OperandStack.Pop();
-            frame.OperandStack.Push(solt2);
-            frame.OperandStack.Push(solt1);
-            frame.OperandStack.Push(solt4);
-            frame.OperandStack.Push(solt3);
-            frame.OperandStack.Push(solt2);
-            frame.OperandStack.Push(solt1);
+            Slot slot1 = frame.OperandStack.Pop();
+            Slot slot2 = frame.OperandStack.Pop();
+            Slot slot3 = frame.OperandStack.Pop();
+            Slot slot4 = frame.OperandStack.Pop();
+            frame.OperandStack.Push(slot2);
+            frame.OperandStack.Push(slot1);
+            frame.OperandStack.Push(slot4);
+            frame.OperandStack.Push(slot3);
+            frame.OperandStack.Push(slot2);
+            frame.OperandStack.Push(slot1);
         }
     }
 
@@ -104,10 +104,10 @@ namespace JDRE.JVM.instructions.Stack
     {
         public override void Execute(Frame frame)
         {
-            Solt solt1 = frame.OperandStack.Pop();
-            Solt solt2 = frame.OperandStack.Pop();
-            frame.OperandStack.Push(solt1);
-            frame.OperandStack.Push(solt2);
+            Slot slot1 = frame.OperandStack.Pop();
+            Slot slot2 = frame.OperandStack.Pop();
+            frame.OperandStack.Push(slot1);
+            frame.OperandStack.Push(slot2);
         }
     }
 }

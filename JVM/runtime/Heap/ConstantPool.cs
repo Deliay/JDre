@@ -23,7 +23,44 @@ namespace JDRE.JVM.runtime.Heap
             {
                 ConstantInfo info = cfCp.getConstantInfo(i);
                 
-
+                if(info is ConstantIntegerInfo)
+                {
+                    consts[i] = ((ConstantIntegerInfo)info).value;
+                }
+                else if (info is ConstantFloatInfo)
+                {
+                    consts[i] = ((ConstantFloatInfo)info).value;
+                }
+                else if (info is ConstantLongInfo)
+                {
+                    consts[i] = ((ConstantLongInfo)info).value;
+                    i++;
+                }
+                else if (info is ConstantDoubleInfo)
+                {
+                    consts[i] = ((ConstantLongInfo)info).value;
+                    i++;
+                }
+                else if (info is ConstantStringInfo)
+                {
+                    consts[i] = ((ConstantStringInfo)info).ToString();
+                }
+                else if (info is ConstantClassInfo)
+                {
+                    consts[i] = new ClassReference(cfCp, info as ConstantClassInfo);
+                }
+                else if (info is ConstantFieldrefInfo)
+                {
+                    consts[i] = new FieldReference(cfCp, info as ConstantFieldrefInfo);
+                }
+                else if (info is ConstantMethodrefInfo)
+                {
+                    consts[i] = new MethodReference(cfCp, info as ConstantMethodrefInfo);
+                }
+                else if (info is ConstantInterfaceMethodrefInfo)
+                {
+                    consts[i] = new InterfaceMethodReference(cfCp, info as ConstantInterfaceMethodrefInfo);
+                }
             }
             
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace JDRE.JVM.runtime
 {
-    class OperandStack : Stack<Solt>
+    class OperandStack : Stack<Slot>
     {
         public OperandStack(int maxStack) : base(maxStack)
         {
@@ -11,7 +11,7 @@ namespace JDRE.JVM.runtime
 
         public void PushInt32(Int32 value)
         {
-            base.Push(new Solt() { Number = value });
+            base.Push(new Slot() { Number = value });
         }
 
         public Int32 PopInt32()
@@ -21,7 +21,7 @@ namespace JDRE.JVM.runtime
 
         public void PushFloat(float value)
         {
-            base.Push(new Solt() { Number = value });
+            base.Push(new Slot() { Number = value });
         }
 
         public Single PopFloat()
@@ -31,7 +31,7 @@ namespace JDRE.JVM.runtime
 
         public void PushLong(Int64 value)
         {
-            base.Push(new Solt() { Number = (Int32)value });
+            base.Push(new Slot() { Number = (Int32)value });
         }
 
         public Int64 PopLong()
@@ -42,7 +42,7 @@ namespace JDRE.JVM.runtime
 
         public void PushDouble(Double value)
         {
-            base.Push(new Solt() { Number = value });
+            base.Push(new Slot() { Number = value });
         }
 
         public Double PopDouble()
@@ -57,7 +57,7 @@ namespace JDRE.JVM.runtime
 
         public void PushObject(Object obj)
         {
-            base.Push(new Solt() { Refer = obj });
+            base.Push(new Slot() { Refer = obj });
         }
 
     }

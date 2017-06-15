@@ -245,9 +245,11 @@ namespace JDRE.JVM.classfile
             return cp.getClassName(classIndex);
         }
 
-        public string[] NameAndDescriptor()
+        public void NameAndDescriptor(out string Name, out string Descriptor)
         {
-            return cp.getNameAndType(nameAndTypeIndex);
+            string name, desc;
+            cp.getNameAndType(nameAndTypeIndex, out name, out desc);
+            Name = name; Descriptor = desc;
         }
     }
 
@@ -306,10 +308,11 @@ namespace JDRE.JVM.classfile
             return getUtf8(info.nameIndex);
         }
 
-        public string[] getNameAndType(UInt16 index)
+        public void getNameAndType(UInt16 index, out string Name, out string Descriptor)
         {
             ConstantNameAndTypeInfo info = getConstantInfo(index) as ConstantNameAndTypeInfo;
-            return new[] { getUtf8(info.nameIndex), getUtf8(info.descriptorIndex) };
+            string name = getUtf8(info.nameIndex), desc = getUtf8(info.descriptorIndex);
+            Name = name; Descriptor = desc;
         }
 
         public string getUtf8(UInt16 index)

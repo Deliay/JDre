@@ -1,4 +1,5 @@
 ﻿using JDRE.JVM.classfile;
+using System.IO;
 
 namespace JDRE.JVM.runtime.Heap
 {
@@ -7,6 +8,19 @@ namespace JDRE.JVM.runtime.Heap
         int maxStack;
         int maxLocals;
         byte[] code;
+
+        public bool IsBridge { get => (AccessFlag & (int)Heap.AccessFlag.ACC_BRIDGE) != 0; }
+        public bool IsVarargs { get => (AccessFlag & (int)Heap.AccessFlag.ACC_VARARGS) != 0; }
+        public bool IsNative { get => (AccessFlag & (int)Heap.AccessFlag.ACC_NATIVE) != 0; }
+        public bool IsAbstract { get => (AccessFlag & (int)Heap.AccessFlag.ACC_ABSTRACT) != 0; }
+        public bool IsStrict { get => (AccessFlag & (int)Heap.AccessFlag.ACC_STRICT) != 0; }
+        public bool IsStatic { get => (AccessFlag & (int)Heap.AccessFlag.ACC_STATIC) != 0; }
+        public bool IsSynchronized { get => (AccessFlag & (int)Heap.AccessFlag.ACC_SYNCHRONIZED) != 0; }
+
+        public int MaxStack { get => maxStack; }
+        public int MaxLocals { get => maxLocals; }
+
+        public byte[] Code() { return code; }
 
         public static Method[] CreateMethods(Class clazz, MemberInfo[] cfMethods)
         {

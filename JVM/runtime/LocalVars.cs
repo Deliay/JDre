@@ -4,13 +4,13 @@ using System.Collections.Generic;
 namespace JDRE.JVM.runtime
 {
 
-    class LocalVar : List<Solt>
+    class LocalVar : List<Slot>
     {
         public LocalVar(int maxLocal) : base(maxLocal)
         {
             for (int i = 0; i < maxLocal; i++)
             {
-                this.Add(new Solt());
+                this.Add(new Slot());
             }
         }
 

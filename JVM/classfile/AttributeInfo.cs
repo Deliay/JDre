@@ -161,7 +161,14 @@ namespace JDRE.JVM.classfile
 
         }
 
-
+        public ConstantValueAttribute ConstantValueIndex()
+        {
+            foreach (var item in attributes)
+            {
+                if (item is ConstantValueAttribute) return item;
+            }
+            return null;
+        }
     }
 
     class ExceptionsAttribute : AttributeInfo

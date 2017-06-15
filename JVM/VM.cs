@@ -62,17 +62,6 @@ namespace JDRE.JVM
             }
         }
 
-        public MemberInfo getMainMethod(ClassFile classFile)
-        {
-            foreach (var item in classFile.Methods)
-            {
-                if(item.Name() == "main" && item.Descriptor() == "([Ljava/lang/String;)V")
-                {
-                    return item;
-                }
-            }
-            return null;
-        }
     }
 
 }

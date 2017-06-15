@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace JDRE.JVM.runtime
 {
-    class Solt
+    class Slot
     {
         public object Number;
         public Object Refer;
