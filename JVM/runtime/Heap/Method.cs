@@ -14,7 +14,6 @@ namespace JDRE.JVM.runtime.Heap
         public bool IsNative { get => (AccessFlag & (int)Heap.AccessFlag.ACC_NATIVE) != 0; }
         public bool IsAbstract { get => (AccessFlag & (int)Heap.AccessFlag.ACC_ABSTRACT) != 0; }
         public bool IsStrict { get => (AccessFlag & (int)Heap.AccessFlag.ACC_STRICT) != 0; }
-        public bool IsStatic { get => (AccessFlag & (int)Heap.AccessFlag.ACC_STATIC) != 0; }
         public bool IsSynchronized { get => (AccessFlag & (int)Heap.AccessFlag.ACC_SYNCHRONIZED) != 0; }
 
         public int MaxStack { get => maxStack; }
@@ -27,7 +26,7 @@ namespace JDRE.JVM.runtime.Heap
             Method[] methods = new Method[cfMethods.Length];
             for (int i = 0; i < cfMethods.Length; i++)
             {
-                methods[i] = new Method(cfMethods[i]) { clazz = clazz };
+                methods[i] = new Method(cfMethods[i]) { Clazz = clazz };
             }
             return methods;
         }

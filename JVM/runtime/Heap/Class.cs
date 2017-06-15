@@ -18,10 +18,10 @@ namespace JDRE.JVM.runtime.Heap
         Method[] methods;
 
         public string[] InterfaceNames;
-        public Class[] Interfaces;
+        public Class[] Interfaces = null;
 
         public int InstanceSlotCount;
-        public int StaticSlotCount;
+        public int StaticSlotCount = 0;
 
         public Slots StaticVars;
 

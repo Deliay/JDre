@@ -23,6 +23,7 @@ namespace JDRE.JVM.runtime
 
         public bool IsInstanceOf(Class clazz)
         {
+            throw new NotImplementedException();
         }
     }
 }

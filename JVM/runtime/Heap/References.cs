@@ -9,9 +9,9 @@ namespace JDRE.JVM.runtime.Heap
 { 
     class SystemReference
     {
-        public classfile.ConstantPool Cp;
+        public classfile.ConstantPool Cp = null;
         public string ClassName;
-        public Class clazz;
+        public Class clazz = null;
 
         protected SystemReference() { }
     }
@@ -38,7 +38,7 @@ namespace JDRE.JVM.runtime.Heap
 
     class FieldReference : MemberReference
     {
-        public Field field;
+        public Field field = null;
 
         public FieldReference(classfile.ConstantPool cp, ConstantMemberrefInfo info) : base(info)
         {
@@ -48,7 +48,7 @@ namespace JDRE.JVM.runtime.Heap
 
     class MethodReference : MemberReference
     {
-        public Method method;
+        public Method method = null;
         public MethodReference(classfile.ConstantPool cp, ConstantMemberrefInfo info) : base(info)
         {
             Cp = cp;
@@ -57,7 +57,7 @@ namespace JDRE.JVM.runtime.Heap
 
     class InterfaceMethodReference : MemberReference
     {
-        public Method method;
+        public Method method = null;
 
         public InterfaceMethodReference(classfile.ConstantPool cp, ConstantMemberrefInfo info) : base(info)
         {

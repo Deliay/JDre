@@ -28,7 +28,7 @@ namespace JDRE.JVM.interpreter
             {
                 Loop(thread, bytecode);
             }
-            catch (Exception e)
+            catch //(Exception e)
             {
                 Console.WriteLine("==========DONE===========");
                 Console.WriteLine("=====LOCAL VARIABLES=====");

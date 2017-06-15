@@ -27,20 +27,20 @@ namespace JDRE.JVM.runtime.Heap
 
         private Class loadNonArrayClass(string name)
         {
-            Stream d;
-            classpath.Entry e;
-            readClass(name, out d, out e);
-
+            readClass(name, out Stream d, out classpath.Entry e);
+            return defineClass(d);
         }
 
         private Class defineClass(Stream data)
         {
             classfile.ClassFile cf = new classfile.ClassFile(data);
             cf.Read();
-            Class clazz = new Class(cf);
-            clazz.Loader = this;
+            Class clazz = new Class(cf)
+            {
+                Loader = this
+            };
             resolveSuperClass(clazz);
-
+            return clazz;
         }
 
         private void resolveSuperClass(Class clazz)

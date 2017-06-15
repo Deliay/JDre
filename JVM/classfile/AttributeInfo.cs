@@ -165,7 +165,7 @@ namespace JDRE.JVM.classfile
         {
             foreach (var item in attributes)
             {
-                if (item is ConstantValueAttribute) return item;
+                if (item is ConstantValueAttribute) return item as ConstantValueAttribute;
             }
             return null;
         }

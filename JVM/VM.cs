@@ -50,18 +50,18 @@ namespace JDRE.JVM
             {
                 Console.WriteLine(item.Name());
             }
-#endif
-            MemberInfo main = getMainMethod(cf);
-            try
-            {
-                new interpreter.Interpreter(main);
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-        }
 
+#endif
+            //MemberInfo main = getMainMethod(cf);
+            //try
+            //{
+            //    new interpreter.Interpreter(main);
+            //}
+            //catch(Exception e)
+            //{
+            //    Console.WriteLine(e.Message);
+            //}
+        }
     }
 
 }
