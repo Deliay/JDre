@@ -13,20 +13,19 @@ namespace JDRE.JVM.interpreter
 {
     class Interpreter
     {
-        public Interpreter(MemberInfo methodInfo)
+        public Interpreter(runtime.Heap.Method method)
         {
-            CodeAttribute codeAttr = methodInfo.CodeAttr();
-            int maxLocal = codeAttr.maxLocals;
-            int maxStack = codeAttr.maxStack;
-            byte[] bytecode = codeAttr.code;
+            //CodeAttribute codeAttr = methodInfo.CodeAttr();
+            int maxLocal = method.MaxLocals;
+            int maxStack = method.MaxStack;
 
             Thread thread = Thread.CreateThread();
-            Frame frame = thread.NewFrame(maxLocal, maxStack);
+            Frame frame = thread.NewFrame(method);
             thread.PushFrame(frame);
 
             try
             {
-                Loop(thread, bytecode);
+                Loop(thread, method.Code);
             }
             catch //(Exception e)
             {
@@ -36,7 +35,7 @@ namespace JDRE.JVM.interpreter
                 {
                     Console.WriteLine(item.Number);
                 }
-                    
+
                 Console.WriteLine("====LOCAL STACKES=====");
                 foreach (var item in frame.OperandStack)
                 {
@@ -62,7 +61,7 @@ namespace JDRE.JVM.interpreter
                 frame.NextPC = reader.PC;
 
 #if (DEBUG)
-                //Console.WriteLine("PC:{0}, INST:{1} {2}", pc, inst.GetType().Name, inst);
+                Console.WriteLine("OK\t{0}\t{1}", pc, inst.GetType().Name);
 #endif
                 inst.Execute(frame);
             }

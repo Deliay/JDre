@@ -51,6 +51,7 @@
     <Compile Include="JVM\classfile\MemberInfo.cs" />
     <Compile Include="JVM\classpath\Classpath.cs" />
     <Compile Include="JVM\classpath\Entry.cs" />
+    <Compile Include="JVM\exception\Lang.cs" />
     <Compile Include="JVM\instructions\Base.cs" />
     <Compile Include="JVM\instructions\BytecodeReader.cs" />
     <Compile Include="JVM\instructions\Ops\Comparisions.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="JVM\instructions\InstructionAllocator.cs" />
     <Compile Include="JVM\instructions\Ops\Loads.cs" />
     <Compile Include="JVM\instructions\Ops\Math.cs" />
+    <Compile Include="JVM\instructions\Ops\References.cs" />
     <Compile Include="JVM\instructions\Ops\Stack.cs" />
     <Compile Include="JVM\instructions\Ops\Stores.cs" />
     <Compile Include="JVM\interpreter\Interpreter.cs" />

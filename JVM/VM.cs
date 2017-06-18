@@ -1,5 +1,6 @@
 ﻿using JDRE.JVM.classfile;
 using JDRE.JVM.classpath;
+using JDRE.JVM.runtime.Heap;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,25 @@ namespace JDRE.JVM
         public void StartJVM()
         {
             cp = new Classpath(cmd.XjreOption, cmd.classpath);
+            ClassLoader loader = new ClassLoader(cp);
 
             Console.WriteLine("classpath:{0} class:{1} args:{2}", cp, cmd.classname, cmd.args);
 
+            string className = cmd.classname.Replace('.', '/');
+            Class mainClass = loader.LoadClass(className);
+            Method mainMethod = mainClass.getMainMethod();
+
+            if(mainMethod != null)
+            {
+                new interpreter.Interpreter(mainMethod);
+            }
+            else
+            {
+                Console.WriteLine("Main method not exist in class " + className);
+            }
+
+            #region old test code
+            /*
             ReadResult result = cp.ReadClass(cmd.classname);
 
             if(result.err.Length != 0) Console.WriteLine(result.err);
@@ -52,15 +69,8 @@ namespace JDRE.JVM
             }
 
 #endif
-            //MemberInfo main = getMainMethod(cf);
-            //try
-            //{
-            //    new interpreter.Interpreter(main);
-            //}
-            //catch(Exception e)
-            //{
-            //    Console.WriteLine(e.Message);
-            //}
+            */
+            #endregion
         }
     }
 
