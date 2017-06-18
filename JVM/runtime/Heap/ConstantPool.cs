@@ -7,15 +7,17 @@ namespace JDRE.JVM.runtime.Heap
         Class clazz;
         object[] consts;
 
+        public Class Clazz { get => clazz; }
+
         public object GetConstant(int index)
         {
             if (consts[index] != null) return consts[index];
             throw new System.NullReferenceException();
         }
 
-        public ConstantPool(Class claz,  classfile.ConstantPool cfCp)
+        public ConstantPool(Class clazz,  classfile.ConstantPool cfCp)
         {
-            clazz = claz;
+            this.clazz = clazz;
             int count = cfCp.Count;
             consts = new object[count];
 

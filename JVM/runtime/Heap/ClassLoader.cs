@@ -111,6 +111,7 @@ namespace JDRE.JVM.runtime.Heap
                     case "J":
                         long lval = (long)cp.GetConstant(cpIndex);
                         vars.SetLong(slotId, lval);
+                        cpIndex++;
                         break;
                     case "F":
                         float fval = (float)cp.GetConstant(cpIndex);
@@ -119,6 +120,7 @@ namespace JDRE.JVM.runtime.Heap
                     case "D":
                         double dval = (double)cp.GetConstant(cpIndex);
                         vars.SetDouble(cpIndex, dval);
+                        cpIndex++;
                         break;
                     case "Ljava/lang/String":
                         throw new NotImplementedException();
