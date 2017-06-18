@@ -28,24 +28,26 @@ namespace JDRE.JVM.runtime.Heap
         private Class loadNonArrayClass(string name)
         {
             readClass(name, out Stream d, out classpath.Entry e);
-            return defineClass(d);
+            Class clz = defineClass(d);
+            Link(clz);
+            Console.WriteLine(string.Format("[Loaded {0} from {1}]", name, e.ToString()));
+            return clz;
         }
 
         private Class defineClass(Stream data)
         {
             classfile.ClassFile cf = new classfile.ClassFile(data);
             cf.Read();
-            Class clazz = new Class(cf)
-            {
-                Loader = this
-            };
+            Class clazz = new Class(cf)  { Loader = this };
             resolveSuperClass(clazz);
+            resolveInterface(clazz);
+            classMap.Add(clazz.Name, clazz);
             return clazz;
         }
 
         private void resolveSuperClass(Class clazz)
         {
-            if(clazz.Name != "java/lang/Objet")
+            if(clazz.Name != "java/lang/Object")
             {
                 clazz.SuperClass = clazz.Loader.LoadClass(clazz.SuperClassName);
             }
@@ -64,7 +66,7 @@ namespace JDRE.JVM.runtime.Heap
             }
         }
 
-        private void LinkedList(Class clazz)
+        private void Link(Class clazz)
         {
             verify(clazz);
             prepare(clazz);
@@ -143,7 +145,7 @@ namespace JDRE.JVM.runtime.Heap
                     if (item.IsLongOrDouble()) slotId++;
                 }
             }
-            clazz.InstanceSlotCount = slotId;
+            clazz.StaticSlotCount = slotId;
         }
 
         private void calcInstanceFieldSlotIds(Class clazz)

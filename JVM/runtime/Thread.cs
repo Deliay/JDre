@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JDRE.JVM.runtime.Heap;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,9 @@ namespace JDRE.JVM.runtime
         Stack stack;
         public int PC { get; set; }
 
-        public Frame NewFrame(int maxLocals, int maxStacks)
+        public Frame NewFrame(Method method)
         {
-            return new Frame(this, maxLocals, maxStacks);
+            return new Frame(this, method);
         }
 
         public void PushFrame(Frame frame)

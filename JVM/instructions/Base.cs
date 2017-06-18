@@ -64,7 +64,7 @@ namespace JDRE.JVM.instructions.Base
 
     class Index16Instruction : Instruction
     {
-        public uint Index { get; private set; }
+        public int Index { get; private set; }
 
         public virtual void Execute(Frame frame)
         {
@@ -73,7 +73,7 @@ namespace JDRE.JVM.instructions.Base
 
         public void FetchOperands(BytecodeReader reader)
         {
-            Index = (uint)reader.ReadUInt8();
+            Index = reader.ReadUInt16();
         }
     }
 }

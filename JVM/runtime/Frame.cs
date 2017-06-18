@@ -13,16 +13,17 @@
 
         public int MaxLocals { get; private set; }
         public int MaxStack { get; private set; }
-
+        public Heap.Method Method { get; private set; }
         public int NextPC { get; set; }
 
-        public Frame(Thread thread, int maxLocals, int maxStack)
+        public Frame(Thread thread, Heap.Method method)
         {
+            this.Method = method;
             this.Thread = thread;
-            MaxLocals = maxLocals;
-            MaxStack = maxStack;
-            LocalVariables = new LocalVar(maxLocals);
-            OperandStack = new OperandStack(maxStack);
+            MaxLocals = method.MaxLocals;
+            MaxStack = method.MaxStack;
+            LocalVariables = new LocalVar(MaxLocals);
+            OperandStack = new OperandStack(MaxStack);
         }
 
 

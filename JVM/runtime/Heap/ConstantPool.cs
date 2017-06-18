@@ -21,7 +21,7 @@ namespace JDRE.JVM.runtime.Heap
             int count = cfCp.Count;
             consts = new object[count];
 
-            for (ushort i = 0; i < count; i++)
+            for (ushort i = 1; i < count; i++)
             {
                 ConstantInfo info = cfCp.getConstantInfo(i);
                 
@@ -49,19 +49,19 @@ namespace JDRE.JVM.runtime.Heap
                 }
                 else if (info is ConstantClassInfo)
                 {
-                    consts[i] = new ClassReference(cfCp, info as ConstantClassInfo);
+                    consts[i] = new ClassReference(this, info as ConstantClassInfo);
                 }
                 else if (info is ConstantFieldrefInfo)
                 {
-                    consts[i] = new FieldReference(cfCp, info as ConstantFieldrefInfo);
+                    consts[i] = new FieldReference(this, info as ConstantFieldrefInfo);
                 }
                 else if (info is ConstantMethodrefInfo)
                 {
-                    consts[i] = new MethodReference(cfCp, info as ConstantMethodrefInfo);
+                    consts[i] = new MethodReference(this, info as ConstantMethodrefInfo);
                 }
                 else if (info is ConstantInterfaceMethodrefInfo)
                 {
-                    consts[i] = new InterfaceMethodReference(cfCp, info as ConstantInterfaceMethodrefInfo);
+                    consts[i] = new InterfaceMethodReference(this, info as ConstantInterfaceMethodrefInfo);
                 }
             }
             

@@ -21,11 +21,41 @@ namespace JDRE.JVM.runtime.Heap
         public Class[] Interfaces = null;
 
         public int InstanceSlotCount;
-        public int StaticSlotCount = 0;
+        public int StaticSlotCount;
 
         public Slots StaticVars;
 
         private ClassFile cf;
+
+        public bool isAssignableForm(Class clazz)
+        {
+            Class s = clazz, t = this;
+            if (s == t) return true;
+            if (!t.IsInterface) return s.isSubClassOf(t);
+            else return s.isImplements(t);
+        }
+
+        public bool isImplements(Class iface)
+        {
+            for (Class super = this; super != null; super = super.SuperClass)
+            {
+                foreach (var item in super.Interfaces)
+                {
+                    if (item == iface || item.isSubInterfaceOf(iface)) return true;
+                }
+            }
+            return false;
+        }
+
+        private bool isSubInterfaceOf(Class iface)
+        {
+            foreach (var item in this.Interfaces)
+            {
+                if (item == iface || item.isSubInterfaceOf(iface)) return true;
+            }
+
+            return false;
+        }
 
         public ClassLoader Loader;
 
@@ -39,15 +69,21 @@ namespace JDRE.JVM.runtime.Heap
             this.constantPool = new ConstantPool(this, cf.Constats);
             this.Fields = Field.CreateFields(this, cf.Fields.ToArray());
             this.methods = Method.CreateMethods(this, cf.Methods.ToArray());
+            //this.StaticVars = new Slots(this.StaticSlotCount);
         }
 
         public bool IsPublic { get => (accessFlag & (int)AccessFlag.ACC_PUBLIC) != 0; }
         public bool IsFinal { get => (accessFlag & (int)AccessFlag.ACC_FINAL) != 0; }
         public bool IsSuper { get => (accessFlag & (int)AccessFlag.ACC_SUPER) != 0; }
 
-        internal bool isSubClassOf(object c)
+        public bool isSubClassOf(Class other)
         {
-            throw new NotImplementedException();
+            for (Class super = this.SuperClass; super != null; super = super.SuperClass)
+            {
+                if (other == super) return true;
+            }
+
+            return false;
         }
 
         public bool IsInterface { get => (accessFlag & (int)AccessFlag.ACC_INTERFACE) != 0; }

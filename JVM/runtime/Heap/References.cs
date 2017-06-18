@@ -88,7 +88,7 @@ namespace JDRE.JVM.runtime.Heap
         {
             foreach (var item in c.Fields)
             {
-                if (item.Name == name && item.Descriptor == descriptor) return field;
+                if (item.Name == name && item.Descriptor == descriptor) return item;
             }
 
             foreach (var item in c.Interfaces)

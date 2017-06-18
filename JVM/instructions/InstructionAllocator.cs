@@ -6,6 +6,7 @@ using JDRE.JVM.instructions.Convertions;
 using JDRE.JVM.instructions.Extended;
 using JDRE.JVM.instructions.Loads;
 using JDRE.JVM.instructions.Math;
+using JDRE.JVM.instructions.References;
 using JDRE.JVM.instructions.Stack;
 using JDRE.JVM.instructions.Stores;
 using JDRE.JVM.runtime;
@@ -208,12 +209,12 @@ namespace JDRE.JVM.instructions.Initial
                     return new BIPUSH();
                 case 0x11:
                     return new SIPUSH();
-                // case 0x12:
-                // 	return new LDC()
-                // case 0x13:
-                // 	return new LDC_W()
-                // case 0x14:
-                // 	return new LDC2_W()
+                case 0x12:
+                    return new LDC();
+                 case 0x13:
+                    return new LDC_W();
+                 case 0x14:
+                    return new LDC2_W();
                 case 0x15:
                     return new ILOAD();
                 case 0x16:
@@ -264,22 +265,22 @@ namespace JDRE.JVM.instructions.Initial
                     return aload_2;
                 case 0x2d:
                     return aload_3;
-                // case 0x2e:
-                // 	return iaload
+                //case 0x2e:
+                //    return iaload;
                 // case 0x2f:
-                // 	return laload
+                // 	return laload;
                 // case 0x30:
-                // 	return faload
+                // 	return faload;
                 // case 0x31:
-                // 	return daload
+                // 	return daload;
                 // case 0x32:
-                // 	return aaload
+                // 	return aaload;
                 // case 0x33:
-                // 	return baload
+                // 	return baload;
                 // case 0x34:
-                // 	return caload
+                // 	return caload;
                 // case 0x35:
-                // 	return saload
+                // 	return saload;
                 case 0x36:
                     return new ISTORE();
                 case 0x37:
@@ -509,61 +510,61 @@ namespace JDRE.JVM.instructions.Initial
                 case 0xa7:
                     return new GOTO();
                 // case 0xa8:
-                // 	return new JSR()
+                // 	return new JSR();
                 // case 0xa9:
-                // 	return new RET()
+                // 	return new RET();
                 case 0xaa:
                     return new TABLE_SWITCH();
                 case 0xab:
                     return new LOOKUP_SWITCH();
                 // case 0xac:
-                // 	return ireturn
+                // 	return ireturn;
                 // case 0xad:
-                // 	return lreturn
+                // 	return lreturn;
                 // case 0xae:
-                // 	return freturn
+                // 	return freturn;
                 // case 0xaf:
-                // 	return dreturn
+                // 	return dreturn;
                 // case 0xb0:
-                // 	return areturn
+                // 	return areturn;
                 // case 0xb1:
-                // 	return _return
-                //	case 0xb2:
-                //		return new GET_STATIC()
-                // case 0xb3:
-                // 	return new PUT_STATIC()
-                // case 0xb4:
-                // 	return new GET_FIELD()
-                // case 0xb5:
-                // 	return new PUT_FIELD()
-                //	case 0xb6:
-                //		return new INVOKE_VIRTUAL()
-                // case 0xb7:
-                // 	return new INVOKE_SPECIAL()
+                // 	return _return;
+                case 0xb2:
+                    return new GET_STATIC();
+                 case 0xb3:
+                    return new PUT_STATIC();
+                 case 0xb4:
+                    return new GET_FIELD();
+                 case 0xb5:
+                    return new PUT_FIELD();
+                case 0xb6:
+                    return new INVOKE_VIRTUAL();
+                case 0xb7:
+                    return new INVOKE_SPECIAL();
                 // case 0xb8:
-                // 	return new INVOKE_STATIC()
+                // 	return new INVOKE_STATIC();
                 // case 0xb9:
-                // 	return new INVOKE_INTERFACE()
+                // 	return new INVOKE_INTERFACE();
                 // case 0xba:
-                // 	return new INVOKE_DYNAMIC()
-                // case 0xbb:
-                // 	return new NEW()
+                // 	return new INVOKE_DYNAMIC();
+                case 0xbb:
+                    return new NEW();
                 // case 0xbc:
-                // 	return new NEW_ARRAY()
+                // 	return new NEW_ARRAY();
                 // case 0xbd:
-                // 	return new ANEW_ARRAY()
+                // 	return new ANEW_ARRAY();
                 // case 0xbe:
-                // 	return arraylength
+                // 	return arraylength;
                 // case 0xbf:
-                // 	return athrow
-                // case 0xc0:
-                // 	return new CHECK_CAST()
-                // case 0xc1:
-                // 	return new INSTANCE_OF()
+                // 	return athrow;
+                 case 0xc0:
+                    return new CHECK_CAST();
+                case 0xc1:
+                    return new INSTANCE_OF();
                 // case 0xc2:
-                // 	return monitorenter
+                // 	return monitorenter;
                 // case 0xc3:
-                // 	return monitorexit
+                // 	return monitorexit;
                 case 0xc4:
                     return new WIDE();
                 // case 0xc5:
@@ -580,7 +581,7 @@ namespace JDRE.JVM.instructions.Initial
                 // case 0xfe: impdep1
                 // case 0xff: impdep2
                 default:
-                    throw new Exception(string.Format("Unsupported opcode: {1}!", opcode));
+                    throw new Exception(string.Format("Unsupported opcode: {0}!", opcode));
             }
         }
     }

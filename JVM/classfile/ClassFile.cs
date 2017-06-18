@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JDRE.JVM.exception.Lang;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace JDRE.JVM.classfile
             //magic
             reader.BaseStream.Seek(0, SeekOrigin.Begin);
             magic = reader.ReadUInt32BE();
-            if (magic != 0xCAFEBABE) throw new FileLoadException("magic error");
+            if (magic != 0xCAFEBABE) throw new ClassFormatError("magic error");
 
             //version
             minorVersion = reader.ReadUInt16BE();
@@ -76,7 +77,7 @@ namespace JDRE.JVM.classfile
                 case 52:
                     break;
                 default:
-                    throw new FileLoadException("UnsupportedClassVersion error"); ;
+                    throw new UnsupportedClassVersionError(); ;
             }
 
             //constant pool

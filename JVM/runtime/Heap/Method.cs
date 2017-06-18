@@ -19,7 +19,7 @@ namespace JDRE.JVM.runtime.Heap
         public int MaxStack { get => maxStack; }
         public int MaxLocals { get => maxLocals; }
 
-        public byte[] Code() { return code; }
+        public byte[] Code { get => code; }
 
         public static Method[] CreateMethods(Class clazz, MemberInfo[] cfMethods)
         {
