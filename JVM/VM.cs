@@ -38,39 +38,6 @@ namespace JDRE.JVM
             {
                 Console.WriteLine("Main method not exist in class " + className);
             }
-
-            #region old test code
-            /*
-            ReadResult result = cp.ReadClass(cmd.classname);
-
-            if(result.err.Length != 0) Console.WriteLine(result.err);
-            else Console.WriteLine(result.stream.Length);
-
-            ClassFile cf = new ClassFile(result.stream);
-            cf.Read();
-#if (DEBUG)
-            Console.WriteLine(cf.ClassName);
-            Console.WriteLine("============================");
-            Console.WriteLine("Methods count: " + cf.Methods.Count);
-            Console.WriteLine("============================");
-            Console.WriteLine("Super class:" + cf.SuperClassName);
-            Console.WriteLine("============================");
-            Console.WriteLine("Interfaces Implements:");
-            foreach (var item in cf.InterfaceNames())
-            {
-                Console.Write(item);
-                Console.Write(",");
-            }
-            Console.WriteLine("\n============================");
-            Console.WriteLine("Methods:");
-            foreach (var item in cf.Methods)
-            {
-                Console.WriteLine(item.Name());
-            }
-
-#endif
-            */
-            #endregion
         }
     }
 

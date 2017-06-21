@@ -68,5 +68,10 @@ namespace JDRE.JVM.runtime
         {
             return base[index].Refer;
         }
+
+        public void SetSlot(int index, Slot slot)
+        {
+            base[index] = slot;
+        }
     }
 }

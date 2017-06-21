@@ -60,5 +60,9 @@ namespace JDRE.JVM.runtime
             base.Push(new Slot() { Refer = obj });
         }
 
+        public Object GetObjectFromTop(int n)
+        {
+            return ToArray()[Count - 1 - n].Refer;
+        }
     }
 }

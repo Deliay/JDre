@@ -15,7 +15,7 @@ namespace JDRE.JVM.runtime.Heap
         ConstantPool constantPool;
 
         public Field[] Fields;
-        Method[] methods;
+        public Method[] Methods;
 
         public string[] InterfaceNames;
         public Class[] Interfaces = null;
@@ -68,7 +68,7 @@ namespace JDRE.JVM.runtime.Heap
             this.InterfaceNames = cf.InterfaceNames().ToArray();
             this.constantPool = new ConstantPool(this, cf.Constats);
             this.Fields = Field.CreateFields(this, cf.Fields.ToArray());
-            this.methods = Method.CreateMethods(this, cf.Methods.ToArray());
+            this.Methods = Method.CreateMethods(this, cf.Methods.ToArray());
             //this.StaticVars = new Slots(this.StaticSlotCount);
         }
 
@@ -76,7 +76,7 @@ namespace JDRE.JVM.runtime.Heap
         public bool IsFinal { get => (accessFlag & (int)AccessFlag.ACC_FINAL) != 0; }
         public bool IsSuper { get => (accessFlag & (int)AccessFlag.ACC_SUPER) != 0; }
 
-        public bool isSubClassOf(Class other)
+        public bool IsSubClassOf(Class other)
         {
             for (Class super = this.SuperClass; super != null; super = super.SuperClass)
             {
@@ -107,7 +107,7 @@ namespace JDRE.JVM.runtime.Heap
 
         public Method getStaticMethod(string name, string descriptor)
         {
-            foreach (var item in methods)
+            foreach (var item in Methods)
             {
                 if(item.IsStatic && item.Name == name && item.Descriptor == descriptor)
                 {
@@ -115,6 +115,11 @@ namespace JDRE.JVM.runtime.Heap
                 }
             }
             return null;
+        }
+
+        public bool IsSuperClassOf(Class other)
+        {
+            return other.isSubClassOf(this);
         }
 
         public Object ToObject()

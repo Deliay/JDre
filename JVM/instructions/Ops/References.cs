@@ -290,42 +290,129 @@ namespace JDRE.JVM.instructions.References
     }
 
     //InvokeSpecial 指令
-    [Obsolete("暂时hack")]
-    class INVOKE_SPECIAL : Index16Instruction
-    {
-        public override void Execute(Frame frame)
-        {
-            frame.OperandStack.PopObject();
-        }
-    }
+    //[Obsolete("暂时hack")]
+    //class INVOKE_SPECIAL : Index16Instruction
+    //{
+    //    public override void Execute(Frame frame)
+    //    {
+    //        frame.OperandStack.PopObject();
+    //    }
+    //}
 
-    [Obsolete("hack")]
-    class INVOKE_VIRTUAL : Index16Instruction
+    class INVOKE_STATIC : Index16Instruction
     {
         public override void Execute(Frame frame)
         {
             ConstantPool cp = frame.Method.Clazz.HeapConstants;
             MethodReference mref = cp.GetConstant(Index) as MethodReference;
+            Method resolvedMethod = mref.ResolvedMethod();
+            if (!resolvedMethod.IsStatic) throw new IncompatiableClassChangeError();
+            InvokerHelper.InvokeMethod(frame, resolvedMethod);
+        }
+    }
+    class INVOKE_SPECIAL : Index16Instruction
+    {
+        public override void Execute(Frame frame)
+        {
+            Class clz = frame.Method.Clazz;
+            ConstantPool cp = clz.HeapConstants;
+            MethodReference mref = cp.GetConstant(Index) as MethodReference;
+            Class resolvedClass = mref.ResolvedClass();
+            Method resolvedMethod = mref.ResolvedMethod();
 
-            if(mref.Name == "println")
+            if (resolvedMethod.Name == "<init>" && resolvedMethod.Clazz != resolvedClass) throw new NoSuchMethodError();
+            if (resolvedMethod.IsStatic) throw new IncompatiableClassChangeError();
+
+            runtime.Object obj = frame.OperandStack.GetObjectFromTop(resolvedMethod.ArgSlotCount - 1);
+
+            if (obj == null) throw new NullPointerException();
+
+            //确保protected方法只能被其子类或本类的方法调用
+            if (resolvedMethod.IsProtected &&
+                resolvedMethod.Clazz.IsSuperClassOf(clz) &&
+                resolvedMethod.Clazz.getPackageName() != clz.getPackageName() &&
+                obj.Clazz != clz &&
+                !obj.Clazz.IsSubClassOf(clz)) throw new IllegalAccessError();
+
+            Method callee = resolvedMethod;
+
+            if(clz.IsSuper && 
+                resolvedClass.IsSuperClassOf(clz) && 
+                resolvedMethod.Name != "<init>")
             {
-                OperandStack stack = frame.OperandStack;
-                switch (mref.Descriptor)
-                {
-                    case "(Z)V": Console.WriteLine(stack.PopInt32() !=0 ); break;
-                    case "(C)V": Console.WriteLine(stack.PopInt32()); break;
-                    case "(B)V": Console.WriteLine(stack.PopInt32()); break;
-                    case "(S)V": Console.WriteLine(stack.PopInt32()); break;
-                    case "(I)V": Console.WriteLine(stack.PopInt32()); break;
-                    case "(J)V": Console.WriteLine(stack.PopLong()); break;
-                    case "(F)V": Console.WriteLine(stack.PopFloat()); break;
-                    case "(D)V": Console.WriteLine(stack.PopDouble()); break;
-                    default:
-                        Console.WriteLine("OUT: " + mref.Descriptor);
-                        break;
-                }
-                stack.PopObject();
+                callee = MethodReference.LookupMethodInClass(clz.SuperClass, mref.Name, mref.Descriptor);
             }
+
+            if (callee == null || callee.IsAbstract) throw new AbstractMethodError();
+
+            InvokerHelper.InvokeMethod(frame, callee);
+        }
+    }
+
+    //[Obsolete("hack")]
+    //class INVOKE_VIRTUAL : Index16Instruction
+    //{
+    //    public override void Execute(Frame frame)
+    //    {
+    //        ConstantPool cp = frame.Method.Clazz.HeapConstants;
+    //        MethodReference mref = cp.GetConstant(Index) as MethodReference;
+
+    //        if(mref.Name == "println")
+    //        {
+    //            OperandStack stack = frame.OperandStack;
+    //            switch (mref.Descriptor)
+    //            {
+    //                case "(Z)V": Console.WriteLine(stack.PopInt32() !=0 ); break;
+    //                case "(C)V": Console.WriteLine(stack.PopInt32()); break;
+    //                case "(B)V": Console.WriteLine(stack.PopInt32()); break;
+    //                case "(S)V": Console.WriteLine(stack.PopInt32()); break;
+    //                case "(I)V": Console.WriteLine(stack.PopInt32()); break;
+    //                case "(J)V": Console.WriteLine(stack.PopLong()); break;
+    //                case "(F)V": Console.WriteLine(stack.PopFloat()); break;
+    //                case "(D)V": Console.WriteLine(stack.PopDouble()); break;
+    //                default:
+    //                    Console.WriteLine("OUT: " + mref.Descriptor);
+    //                    break;
+    //            }
+    //            stack.PopObject();
+    //        }
+    //    }
+    //}
+
+    class INVOKE_VIRTUAL : Index16Instruction
+    {
+        public override void Execute(Frame frame)
+        {
+            Class clz = frame.Method.Clazz;
+            ConstantPool cp = clz.HeapConstants;
+            MethodReference mref = cp.GetConstant(Index) as MethodReference;
+            Class resolvedClass = mref.ResolvedClass();
+            Method resolvedMethod = mref.ResolvedMethod();
+            
+            if (resolvedMethod.IsStatic) throw new IncompatiableClassChangeError();
+
+            runtime.Object obj = frame.OperandStack.GetObjectFromTop(resolvedMethod.ArgSlotCount - 1);
+
+            if (obj == null)
+            {
+                // native hack
+                if(mref.Name == "println")
+                {
+                    InvokerHelper.println(frame.OperandStack, mref.Descriptor);
+                }
+                throw new NullPointerException();
+            }
+            //确保protected方法只能被其子类或本类的方法调用
+            if (resolvedMethod.IsProtected &&
+                resolvedMethod.Clazz.IsSuperClassOf(clz) &&
+                resolvedMethod.Clazz.getPackageName() != clz.getPackageName() &&
+                obj.Clazz != clz &&
+                !obj.Clazz.IsSubClassOf(clz)) throw new IllegalAccessError();
+
+            Method callee = MethodReference.LookupMethodInClass(obj.Clazz, mref.Name, mref.Descriptor);
+            if (callee == null || callee.IsAbstract) throw new AbstractMethodError();
+
+            InvokerHelper.InvokeMethod(frame, callee);
         }
     }
 }
