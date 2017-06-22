@@ -32,7 +32,7 @@ namespace JDRE.JVM
 
             if(mainMethod != null)
             {
-                new interpreter.Interpreter(mainMethod);
+                new interpreter.Interpreter(mainMethod, true);
             }
             else
             {

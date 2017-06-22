@@ -37,7 +37,7 @@ namespace JDRE.JVM.runtime.Heap
             if (IsPublic) return true;
             if (IsProtected)
             {
-                return d == Clazz || d.isSubClassOf(Clazz) || Clazz.getPackageName() == d.getPackageName(); 
+                return d == Clazz || d.IsSubClassOf(Clazz) || Clazz.getPackageName() == d.getPackageName(); 
             }
             if (!IsPrivate)
             {

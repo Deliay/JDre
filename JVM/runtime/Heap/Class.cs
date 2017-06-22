@@ -31,7 +31,7 @@ namespace JDRE.JVM.runtime.Heap
         {
             Class s = clazz, t = this;
             if (s == t) return true;
-            if (!t.IsInterface) return s.isSubClassOf(t);
+            if (!t.IsInterface) return s.IsSubClassOf(t);
             else return s.isImplements(t);
         }
 
@@ -119,7 +119,7 @@ namespace JDRE.JVM.runtime.Heap
 
         public bool IsSuperClassOf(Class other)
         {
-            return other.isSubClassOf(this);
+            return other.IsSubClassOf(this);
         }
 
         public Object ToObject()

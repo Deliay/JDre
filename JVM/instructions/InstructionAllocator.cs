@@ -157,12 +157,12 @@ namespace JDRE.JVM.instructions.Initial
         public static FCMPG fcmpg = new FCMPG();
         public static DCMPL dcmpl = new DCMPL();
         public static DCMPG dcmpg = new DCMPG();
-        //public static IRETURN ireturn = new IRETURN();
-        //public static LRETURN lreturn = new LRETURN();
-        //public static FRETURN freturn = new FRETURN();
-        //public static DRETURN dreturn = new DRETURN();
-        //public static ARETURN areturn = new ARETURN();
-        //public static RETURN _return = new RETURN();
+        public static IRETURN ireturn = new IRETURN();
+        public static LRETURN lreturn = new LRETURN();
+        public static FRETURN freturn = new FRETURN();
+        public static DRETURN dreturn = new DRETURN();
+        public static ARETURN areturn = new ARETURN();
+        public static RETURN _return = new RETURN();
         //public static ARRAY_LENGTH arraylength = new ARRAY_LENGTH();
         //public static ATHROW athrow = new ATHROW();
         //public static MONITOR_ENTER monitorenter = new MONITOR_ENTER();
@@ -517,18 +517,18 @@ namespace JDRE.JVM.instructions.Initial
                     return new TABLE_SWITCH();
                 case 0xab:
                     return new LOOKUP_SWITCH();
-                // case 0xac:
-                // 	return ireturn;
-                // case 0xad:
-                // 	return lreturn;
-                // case 0xae:
-                // 	return freturn;
-                // case 0xaf:
-                // 	return dreturn;
-                // case 0xb0:
-                // 	return areturn;
-                // case 0xb1:
-                // 	return _return;
+                case 0xac:
+                    return ireturn;
+                case 0xad:
+                    return lreturn;
+                case 0xae:
+                    return freturn;
+                case 0xaf:
+                    return dreturn;
+                case 0xb0:
+                    return areturn;
+                case 0xb1:
+                    return _return;
                 case 0xb2:
                     return new GET_STATIC();
                  case 0xb3:
@@ -541,12 +541,12 @@ namespace JDRE.JVM.instructions.Initial
                     return new INVOKE_VIRTUAL();
                 case 0xb7:
                     return new INVOKE_SPECIAL();
-                // case 0xb8:
-                // 	return new INVOKE_STATIC();
-                // case 0xb9:
-                // 	return new INVOKE_INTERFACE();
-                // case 0xba:
-                // 	return new INVOKE_DYNAMIC();
+                case 0xb8:
+                    return new INVOKE_STATIC();
+                case 0xb9:
+                    return new INVOKE_INTERFACE();
+                //case 0xba:
+                //    return new INVOKE_DYNAMIC();
                 case 0xbb:
                     return new NEW();
                 // case 0xbc:

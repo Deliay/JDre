@@ -17,6 +17,8 @@ namespace JDRE.JVM.runtime
         Stack stack;
         public int PC { get; set; }
 
+        public IReadOnlyList<Frame> Frames { get => stack.ToList(); }
+
         public Frame NewFrame(Method method)
         {
             return new Frame(this, method);
@@ -35,6 +37,11 @@ namespace JDRE.JVM.runtime
         public Frame CurrentFrame()
         {
             return stack.Peek();
+        }
+
+        public bool IsStackEmpty()
+        {
+            return stack.Count == 0 || stack.Top() == null;
         }
     }
 }

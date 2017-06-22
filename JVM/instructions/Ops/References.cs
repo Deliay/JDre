@@ -256,7 +256,7 @@ namespace JDRE.JVM.instructions.References
             }
 
             ConstantPool cp = frame.Method.Clazz.HeapConstants;
-            ClassReference crf = cp.GetConstant(Index) as ClassReference;
+            ClassReference crf = (ClassReference)cp.GetConstant(Index);
             Class clz = crf.ResolvedClass();
 
             if (obj.IsInstanceOf(clz)) stack.PushInt32(1);
@@ -411,6 +411,42 @@ namespace JDRE.JVM.instructions.References
 
             Method callee = MethodReference.LookupMethodInClass(obj.Clazz, mref.Name, mref.Descriptor);
             if (callee == null || callee.IsAbstract) throw new AbstractMethodError();
+
+            InvokerHelper.InvokeMethod(frame, callee);
+        }
+    }
+
+    class INVOKE_INTERFACE : NoOperandsInstruction
+    {
+        int index;
+        byte count;
+        byte zero;
+
+        public override void FetchOperands(BytecodeReader reader)
+        {
+            index = reader.ReadUInt16();
+            count = reader.ReadUInt8();
+            zero = reader.ReadUInt8();
+        }
+
+        public override void Execute(Frame frame)
+        {
+            ConstantPool cp = frame.Method.Clazz.HeapConstants;
+            MethodReference mref = (MethodReference)cp.GetConstant(index);
+            Method resolvedMethod = mref.ResolvedMethod();
+
+            if (resolvedMethod.IsStatic || resolvedMethod.IsPrivate) throw new IncompatiableClassChangeError();
+
+            runtime.Object obj = frame.OperandStack.GetObjectFromTop(resolvedMethod.ArgSlotCount - 1);
+            if (obj == null) throw new NullPointerException();
+
+            if (!obj.Clazz.isImplements(mref.ResolvedClass())) throw new IncompatiableClassChangeError();
+
+            Method callee = MethodReference.LookupMethodInClass(obj.Clazz, mref.Name, mref.Descriptor);
+
+            if (callee == null || callee.IsAbstract) throw new AbstractMethodError();
+
+            if (!callee.IsPublic) throw new IllegalAccessError();
 
             InvokerHelper.InvokeMethod(frame, callee);
         }
